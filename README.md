@@ -6,7 +6,7 @@
 
 ### End-to-End SQL Analytics & Business Intelligence Project
 
-*A complete Data Analytics project that simulates a real-world Software-as-a-Service (SaaS) business using SQL, Python, and Power BI.*
+_A complete Data Analytics project that simulates a real-world Software-as-a-Service (SaaS) business using SQL, Python, and Power BI._
 
 ![SQL](...)
 ![Python](...)
@@ -47,14 +47,14 @@ The objective is to help business stakeholders answer critical questions such as
 
 # 🛠 Tech Stack
 
-| Category | Technology |
-|----------|------------|
-| Database | MySQL |
-| Query Language | SQL |
-| Programming | Python (Pandas) |
-| Visualization | Power BI |
-| Version Control | Git |
-| Repository Hosting | GitHub |
+| Category                | Technology         |
+| ----------------------- | ------------------ |
+| Database                | MySQL              |
+| Query Language          | SQL                |
+| Programming             | Python (Pandas)    |
+| Visualization           | Power BI           |
+| Version Control         | Git                |
+| Repository Hosting      | GitHub             |
 | Development Environment | Visual Studio Code |
 
 ---
@@ -248,7 +248,7 @@ Examples of business problems addressed in this project:
 images/dashboard_preview.png
 ```
 
-*(Power BI dashboard screenshot will be displayed here.)*
+_(Power BI dashboard screenshot will be displayed here.)_
 
 ---
 
@@ -343,7 +343,7 @@ https://github.com/SantiSomaSekhar
 
 **LinkedIn**
 
-*Add your LinkedIn profile URL here.*
+_Add your LinkedIn profile URL here._
 
 ---
 
