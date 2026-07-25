@@ -476,3 +476,68 @@ ORDER BY total_achieved_revenue DESC;
 -- =============================================================================
 -- End of Account Manager Performance
 -- =============================================================================
+-- =============================================================================
+-- SECTION 8 : EXECUTIVE KPI DASHBOARD
+-- Purpose:
+-- Calculate executive-level SaaS KPIs used for monitoring
+-- business growth and overall company performance.
+-- =============================================================================
+-- -----------------------------------------------------------------------------
+-- Q36. Monthly Recurring Revenue (MRR)
+-- Objective : Calculate the recurring monthly revenue generated from
+-- active monthly subscriptions.
+-- -----------------------------------------------------------------------------
+SELECT ROUND(SUM(p.monthly_price), 2) AS monthly_recurring_revenue
+FROM subscriptions s
+    JOIN plans p ON s.plan_id = p.plan_id
+WHERE s.subscription_status = 'Active'
+    AND s.billing_cycle = 'Monthly';
+-- -----------------------------------------------------------------------------
+-- Q37. Annual Recurring Revenue (ARR)
+-- Objective : Estimate annual recurring revenue generated from
+-- active subscriptions.
+-- -----------------------------------------------------------------------------
+SELECT ROUND(SUM(p.monthly_price * 12), 2) AS annual_recurring_revenue
+FROM subscriptions s
+    JOIN plans p ON s.plan_id = p.plan_id
+WHERE s.subscription_status = 'Active';
+-- -----------------------------------------------------------------------------
+-- Q38. Average Revenue Per Customer (ARPU)
+-- Objective : Measure the average revenue generated per customer.
+-- -----------------------------------------------------------------------------
+SELECT ROUND(SUM(i.amount) / COUNT(DISTINCT s.customer_id), 2) AS average_revenue_per_customer
+FROM invoices i
+    JOIN subscriptions s ON i.subscription_id = s.subscription_id
+WHERE i.payment_status = 'Paid';
+-- -----------------------------------------------------------------------------
+-- Q39. Active Customer Percentage
+-- Objective : Measure the percentage of customers with
+-- active subscriptions.
+-- -----------------------------------------------------------------------------
+SELECT ROUND(
+        COUNT(
+            DISTINCT CASE
+                WHEN subscription_status = 'Active' THEN customer_id
+            END
+        ) * 100.0 / COUNT(DISTINCT customer_id),
+        2
+    ) AS active_customer_percentage
+FROM subscriptions;
+-- -----------------------------------------------------------------------------
+-- Q40. Customer Churn Rate
+-- Objective : Calculate the percentage of customers
+-- with expired subscriptions.
+-- -----------------------------------------------------------------------------
+SELECT ROUND(
+        COUNT(
+            DISTINCT CASE
+                WHEN subscription_status = 'Expired' THEN customer_id
+            END
+        ) * 100.0 / COUNT(DISTINCT customer_id),
+        2
+    ) AS customer_churn_rate
+FROM subscriptions;
+-- =============================================================================
+-- BUSINESS QUESTIONS COMPLETED
+-- Total Business Questions : 40
+-- =============================================================================
