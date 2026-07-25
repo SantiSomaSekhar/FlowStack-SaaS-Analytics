@@ -408,3 +408,95 @@ FROM subscriptions;
 -- =============================================================================
 -- End of CASE Expressions & Customer Segmentation
 -- =============================================================================
+-- =============================================================================
+-- SECTION 7 : EXECUTIVE ANALYTICS
+-- Purpose:
+-- Generate executive-level business insights by combining
+-- advanced SQL techniques for strategic decision-making.
+-- =============================================================================
+-- -----------------------------------------------------------------------------
+-- Q19. Top Revenue Generating Region
+-- Objective : Identify the region contributing the highest revenue.
+-- -----------------------------------------------------------------------------
+WITH regional_revenue AS (
+    SELECT c.region,
+        ROUND(SUM(i.amount), 2) AS total_revenue
+    FROM customers c
+        JOIN subscriptions s ON c.customer_id = s.customer_id
+        JOIN invoices i ON s.subscription_id = i.subscription_id
+    WHERE i.payment_status = 'Paid'
+    GROUP BY c.region
+)
+SELECT region,
+    total_revenue,
+    DENSE_RANK() OVER (
+        ORDER BY total_revenue DESC
+    ) AS revenue_rank
+FROM regional_revenue;
+-- -----------------------------------------------------------------------------
+-- Q20. Executive Business Performance Summary
+-- Objective : Display key SaaS performance indicators in a single report.
+-- -----------------------------------------------------------------------------
+SELECT COUNT(DISTINCT c.customer_id) AS total_customers,
+    COUNT(
+        DISTINCT CASE
+            WHEN s.subscription_status = 'Active' THEN s.customer_id
+        END
+    ) AS active_customers,
+    ROUND(
+        SUM(
+            CASE
+                WHEN i.payment_status = 'Paid' THEN i.amount
+                ELSE 0
+            END
+        ),
+        2
+    ) AS total_revenue,
+    ROUND(
+        AVG(
+            CASE
+                WHEN i.payment_status = 'Paid' THEN i.amount
+            END
+        ),
+        2
+    ) AS average_invoice_value
+FROM customers c
+    LEFT JOIN subscriptions s ON c.customer_id = s.customer_id
+    LEFT JOIN invoices i ON s.subscription_id = i.subscription_id;
+-- -----------------------------------------------------------------------------
+-- Q21. Revenue Contribution by Industry
+-- Objective : Measure each industry's contribution to overall revenue.
+-- -----------------------------------------------------------------------------
+WITH industry_revenue AS (
+    SELECT c.industry,
+        ROUND(SUM(i.amount), 2) AS total_revenue
+    FROM customers c
+        JOIN subscriptions s ON c.customer_id = s.customer_id
+        JOIN invoices i ON s.subscription_id = i.subscription_id
+    WHERE i.payment_status = 'Paid'
+    GROUP BY c.industry
+)
+SELECT industry,
+    total_revenue,
+    ROUND(
+        (total_revenue / SUM(total_revenue) OVER ()) * 100,
+        2
+    ) AS revenue_percentage
+FROM industry_revenue
+ORDER BY total_revenue DESC;
+-- =============================================================================
+-- End of Executive Analytics
+-- =============================================================================
+-- =============================================================================
+-- ADVANCED SQL ANALYSIS COMPLETED
+--
+-- Topics Covered:
+-- • Common Table Expressions (CTEs)
+-- • Ranking Functions
+-- • Window Aggregate Functions
+-- • Running Totals
+-- • Moving Averages
+-- • LAG() & LEAD()
+-- • CASE Expressions
+-- • Executive Analytics
+-- =============================================================================
