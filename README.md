@@ -1,10 +1,16 @@
 <div align="center">
 
+<img src="images/flowstack_banner.png" alt="FlowStack SaaS Analytics Banner" width="100%">
+
 # 🚀 FlowStack SaaS Analytics
 
 ### End-to-End SQL Analytics & Business Intelligence Project
 
 *A complete Data Analytics project that simulates a real-world Software-as-a-Service (SaaS) business using SQL, Python, and Power BI.*
+
+![SQL](...)
+![Python](...)
+...
 
 ![SQL](https://img.shields.io/badge/SQL-MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-Pandas-3776AB?style=for-the-badge&logo=python&logoColor=white)
