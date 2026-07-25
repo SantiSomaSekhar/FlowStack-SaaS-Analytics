@@ -75,3 +75,73 @@ WITH plan_revenue AS (
 SELECT *
 FROM plan_revenue
 ORDER BY total_revenue DESC;
+-- =============================================================================
+-- SECTION 2 : RANKING FUNCTIONS
+-- Purpose:
+-- Rank customers, subscription plans, and account managers
+-- based on business performance.
+-- =============================================================================
+-- -----------------------------------------------------------------------------
+-- Q4. Rank Customers by Revenue
+-- Objective : Assign a unique rank to each customer based on revenue generated.
+-- -----------------------------------------------------------------------------
+WITH customer_revenue AS (
+    SELECT c.customer_id,
+        c.company_name,
+        ROUND(SUM(i.amount), 2) AS total_revenue
+    FROM customers c
+        JOIN subscriptions s ON c.customer_id = s.customer_id
+        JOIN invoices i ON s.subscription_id = i.subscription_id
+    WHERE i.payment_status = 'Paid'
+    GROUP BY c.customer_id,
+        c.company_name
+)
+SELECT customer_id,
+    company_name,
+    total_revenue,
+    ROW_NUMBER() OVER (
+        ORDER BY total_revenue DESC
+    ) AS revenue_rank
+FROM customer_revenue;
+-- -----------------------------------------------------------------------------
+-- Q5. Rank Subscription Plans by Revenue
+-- Objective : Rank subscription plans based on total revenue generated.
+-- -----------------------------------------------------------------------------
+WITH plan_revenue AS (
+    SELECT p.plan_name,
+        ROUND(SUM(i.amount), 2) AS total_revenue
+    FROM plans p
+        JOIN subscriptions s ON p.plan_id = s.plan_id
+        JOIN invoices i ON s.subscription_id = i.subscription_id
+    WHERE i.payment_status = 'Paid'
+    GROUP BY p.plan_name
+)
+SELECT plan_name,
+    total_revenue,
+    RANK() OVER (
+        ORDER BY total_revenue DESC
+    ) AS revenue_rank
+FROM plan_revenue;
+-- -----------------------------------------------------------------------------
+-- Q6. Dense Rank Account Managers by Revenue
+-- Objective : Rank account managers while avoiding gaps in ranking.
+-- -----------------------------------------------------------------------------
+WITH manager_revenue AS (
+    SELECT am.manager_name,
+        ROUND(SUM(i.amount), 2) AS total_revenue
+    FROM account_managers am
+        JOIN customers c ON am.manager_id = c.manager_id
+        JOIN subscriptions s ON c.customer_id = s.customer_id
+        JOIN invoices i ON s.subscription_id = i.subscription_id
+    WHERE i.payment_status = 'Paid'
+    GROUP BY am.manager_name
+)
+SELECT manager_name,
+    total_revenue,
+    DENSE_RANK() OVER (
+        ORDER BY total_revenue DESC
+    ) AS manager_rank
+FROM manager_revenue;
+-- =============================================================================
+-- End of Ranking Functions
+-- =============================================================================
