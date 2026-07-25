@@ -130,3 +130,60 @@ FROM subscriptions;
 -- =============================================================================
 -- End of Subscription Analytics
 -- =============================================================================
+-- =============================================================================
+-- SECTION 3 : REVENUE ANALYTICS
+-- Purpose:
+-- Analyze company revenue, identify top-performing subscription plans,
+-- evaluate regional performance, and monitor revenue trends.
+-- =============================================================================
+-- -----------------------------------------------------------------------------
+-- Q11. Total Revenue Generated
+-- Objective : Calculate the total revenue generated from all invoices.
+-- -----------------------------------------------------------------------------
+SELECT ROUND(SUM(amount), 2) AS total_revenue
+FROM invoices
+WHERE payment_status = 'Paid';
+-- -----------------------------------------------------------------------------
+-- Q12. Revenue by Subscription Plan
+-- Objective : Identify which subscription plans generate the highest revenue.
+-- -----------------------------------------------------------------------------
+SELECT p.plan_name,
+    ROUND(SUM(i.amount), 2) AS total_revenue
+FROM invoices i
+    JOIN subscriptions s ON i.subscription_id = s.subscription_id
+    JOIN plans p ON s.plan_id = p.plan_id
+WHERE i.payment_status = 'Paid'
+GROUP BY p.plan_name
+ORDER BY total_revenue DESC;
+-- -----------------------------------------------------------------------------
+-- Q13. Revenue by Customer Region
+-- Objective : Compare revenue contribution across different regions.
+-- -----------------------------------------------------------------------------
+SELECT c.region,
+    ROUND(SUM(i.amount), 2) AS total_revenue
+FROM invoices i
+    JOIN subscriptions s ON i.subscription_id = s.subscription_id
+    JOIN customers c ON s.customer_id = c.customer_id
+WHERE i.payment_status = 'Paid'
+GROUP BY c.region
+ORDER BY total_revenue DESC;
+-- -----------------------------------------------------------------------------
+-- Q14. Monthly Revenue Trend
+-- Objective : Monitor monthly revenue growth over time.
+-- -----------------------------------------------------------------------------
+SELECT DATE_FORMAT(invoice_date, '%Y-%m') AS revenue_month,
+    ROUND(SUM(amount), 2) AS monthly_revenue
+FROM invoices
+WHERE payment_status = 'Paid'
+GROUP BY DATE_FORMAT(invoice_date, '%Y-%m')
+ORDER BY revenue_month;
+-- -----------------------------------------------------------------------------
+-- Q15. Average Invoice Value
+-- Objective : Measure the average revenue generated per paid invoice.
+-- -----------------------------------------------------------------------------
+SELECT ROUND(AVG(amount), 2) AS average_invoice_value
+FROM invoices
+WHERE payment_status = 'Paid';
+-- =============================================================================
+-- End of Revenue Analytics
+-- =============================================================================
