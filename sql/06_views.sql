@@ -4,164 +4,123 @@
  File         : 06_views.sql
  
  Description  :
- Creates reusable SQL views for reporting,
- dashboard development, and business analysis.
+ Creates reusable SQL views for reporting, dashboard development,
+ and business intelligence. These views simplify complex joins and
+ provide ready-to-use datasets for analysis and visualization.
  ===============================================================================
  */
 USE flowstack_analytics;
--- -----------------------------------------------------------------------------
--- Q1. Verify Record Count for All Tables
--- Objective : Ensure all datasets have been imported successfully.
--- -----------------------------------------------------------------------------
-SELECT 'account_managers' AS table_name,
-    COUNT(*) AS total_records
-FROM account_managers
-UNION ALL
-SELECT 'customers',
-    COUNT(*)
-FROM customers
-UNION ALL
-SELECT 'plans',
-    COUNT(*)
-FROM plans
-UNION ALL
-SELECT 'subscriptions',
-    COUNT(*)
-FROM subscriptions
-UNION ALL
-SELECT 'invoices',
-    COUNT(*)
-FROM invoices
-UNION ALL
-SELECT 'support_tickets',
-    COUNT(*)
-FROM support_tickets
-UNION ALL
-SELECT 'usage_logs',
-    COUNT(*)
-FROM usage_logs
-UNION ALL
-SELECT 'monthly_targets',
-    COUNT(*)
-FROM monthly_targets;
--- -----------------------------------------------------------------------------
--- Q2. Check Critical Columns for NULL Values
--- Objective : Ensure key foreign keys and business columns are populated.
--- -----------------------------------------------------------------------------
-SELECT COUNT(*) AS customers_without_manager
-FROM customers
-WHERE manager_id IS NULL;
-SELECT COUNT(*) AS subscriptions_without_customer
-FROM subscriptions
-WHERE customer_id IS NULL;
-SELECT COUNT(*) AS subscriptions_without_plan
-FROM subscriptions
-WHERE plan_id IS NULL;
-SELECT COUNT(*) AS invoices_without_subscription
-FROM invoices
-WHERE subscription_id IS NULL;
-SELECT COUNT(*) AS tickets_without_customer
-FROM support_tickets
-WHERE customer_id IS NULL;
-SELECT COUNT(*) AS usage_without_customer
-FROM usage_logs
-WHERE customer_id IS NULL;
--- -----------------------------------------------------------------------------
--- Q3. Check for Duplicate Customer Records
--- Objective : Ensure customer IDs remain unique.
--- -----------------------------------------------------------------------------
-SELECT customer_id,
-    COUNT(*) AS duplicate_count
-FROM customers
-GROUP BY customer_id
-HAVING COUNT(*) > 1;
--- -----------------------------------------------------------------------------
--- Q4. Check for Duplicate Invoice Records
--- -----------------------------------------------------------------------------
-SELECT invoice_id,
-    COUNT(*) AS duplicate_count
-FROM invoices
-GROUP BY invoice_id
-HAVING COUNT(*) > 1;
--- -----------------------------------------------------------------------------
--- Q5. Verify Customer References in Subscriptions
--- Objective : Identify subscriptions referencing missing customers.
--- -----------------------------------------------------------------------------
-SELECT s.subscription_id
-FROM subscriptions s
-    LEFT JOIN customers c ON s.customer_id = c.customer_id
-WHERE c.customer_id IS NULL;
--- -----------------------------------------------------------------------------
--- Q6. Verify Subscription References in Invoices
--- -----------------------------------------------------------------------------
-SELECT i.invoice_id
-FROM invoices i
-    LEFT JOIN subscriptions s ON i.subscription_id = s.subscription_id
-WHERE s.subscription_id IS NULL;
--- -----------------------------------------------------------------------------
--- Q7. Validate Invoice Amounts
--- Objective : Identify invoices with zero or negative values.
--- -----------------------------------------------------------------------------
-SELECT *
-FROM invoices
-WHERE amount <= 0;
--- -----------------------------------------------------------------------------
--- Q8. Validate Resolution Hours
--- -----------------------------------------------------------------------------
-SELECT *
-FROM support_tickets
-WHERE resolution_hours < 0;
--- -----------------------------------------------------------------------------
--- Q9. Validate Customer Ratings
--- -----------------------------------------------------------------------------
-SELECT *
-FROM support_tickets
-WHERE customer_rating NOT BETWEEN 0 AND 5;
--- -----------------------------------------------------------------------------
--- Q10. Validate Subscription Dates
--- Objective : Ensure subscription end dates occur after start dates.
--- -----------------------------------------------------------------------------
-SELECT *
-FROM subscriptions
-WHERE subscription_end < subscription_start;
--- -----------------------------------------------------------------------------
--- Q11. Validate Invoice Dates
--- -----------------------------------------------------------------------------
-SELECT *
-FROM invoices
-WHERE paid_date < invoice_date;
--- -----------------------------------------------------------------------------
--- Q12. Overall Data Quality Status
--- Objective : Display overall table statistics.
--- -----------------------------------------------------------------------------
-SELECT (
-        SELECT COUNT(*)
-        FROM customers
-    ) AS total_customers,
-    (
-        SELECT COUNT(*)
-        FROM subscriptions
-    ) AS total_subscriptions,
-    (
-        SELECT COUNT(*)
-        FROM invoices
-    ) AS total_invoices,
-    (
-        SELECT COUNT(*)
-        FROM support_tickets
-    ) AS total_support_tickets,
-    (
-        SELECT COUNT(*)
-        FROM usage_logs
-    ) AS total_usage_records;
 -- =============================================================================
--- DATA VALIDATION COMPLETED
+-- VIEW 1 : CUSTOMER SUBSCRIPTION OVERVIEW
+-- Purpose:
+-- Displays customer information along with subscription details.
+-- =============================================================================
+CREATE VIEW vw_customer_subscription_overview AS
+SELECT c.customer_id,
+    c.company_name,
+    c.industry,
+    c.region,
+    p.plan_name,
+    s.billing_cycle,
+    s.subscription_status,
+    s.subscription_start,
+    s.subscription_end
+FROM customers c
+    JOIN subscriptions s ON c.customer_id = s.customer_id
+    JOIN plans p ON s.plan_id = p.plan_id;
+-- =============================================================================
+-- VIEW 2 : REVENUE SUMMARY
+-- Purpose:
+-- Displays invoice and payment information for revenue reporting.
+-- =============================================================================
+CREATE VIEW vw_revenue_summary AS
+SELECT c.customer_id,
+    c.company_name,
+    p.plan_name,
+    i.invoice_id,
+    i.invoice_date,
+    i.amount,
+    i.payment_method,
+    i.payment_status
+FROM customers c
+    JOIN subscriptions s ON c.customer_id = s.customer_id
+    JOIN plans p ON s.plan_id = p.plan_id
+    JOIN invoices i ON s.subscription_id = i.subscription_id;
+-- =============================================================================
+-- VIEW 3 : CUSTOMER LIFETIME REVENUE
+-- Purpose:
+-- Displays total revenue generated by each customer.
+-- =============================================================================
+CREATE VIEW vw_customer_lifetime_revenue AS
+SELECT c.customer_id,
+    c.company_name,
+    ROUND(SUM(i.amount), 2) AS lifetime_revenue
+FROM customers c
+    JOIN subscriptions s ON c.customer_id = s.customer_id
+    JOIN invoices i ON s.subscription_id = i.subscription_id
+WHERE i.payment_status = 'Paid'
+GROUP BY c.customer_id,
+    c.company_name;
+-- =============================================================================
+-- VIEW 4 : SUPPORT PERFORMANCE
+-- Purpose:
+-- Displays customer support ticket details for reporting.
+-- =============================================================================
+CREATE VIEW vw_support_performance AS
+SELECT c.customer_id,
+    c.company_name,
+    st.ticket_id,
+    st.category,
+    st.priority,
+    st.status,
+    st.resolution_hours,
+    st.customer_rating
+FROM customers c
+    JOIN support_tickets st ON c.customer_id = st.customer_id;
+-- =============================================================================
+-- VIEW 5 : PRODUCT USAGE SUMMARY
+-- Purpose:
+-- Displays customer product usage metrics.
+-- =============================================================================
+CREATE VIEW vw_product_usage_summary AS
+SELECT c.customer_id,
+    c.company_name,
+    u.usage_month,
+    u.active_users,
+    u.api_requests,
+    u.storage_used_gb,
+    u.login_count
+FROM customers c
+    JOIN usage_logs u ON c.customer_id = u.customer_id;
+-- =============================================================================
+-- VIEW 6 : ACCOUNT MANAGER PERFORMANCE
+-- Purpose:
+-- Displays customer assignments and monthly targets for account managers.
+-- =============================================================================
+CREATE VIEW vw_account_manager_performance AS
+SELECT am.manager_id,
+    am.manager_name,
+    c.customer_id,
+    c.company_name,
+    mt.target_month,
+    mt.target_revenue,
+    mt.achieved_revenue
+FROM account_managers am
+    LEFT JOIN customers c ON am.manager_id = c.manager_id
+    LEFT JOIN monthly_targets mt ON am.manager_id = mt.manager_id;
+-- =============================================================================
+-- Verify Created Views
+-- =============================================================================
+SHOW FULL TABLES
+WHERE Table_type = 'VIEW';
+-- =============================================================================
+-- VIEWS CREATED SUCCESSFULLY
 --
--- Validation Areas:
--- • Record Counts
--- • NULL Values
--- • Duplicate Records
--- • Referential Integrity
--- • Business Rules
--- • Date Validation
+-- Views Created:
+-- • vw_customer_subscription_overview
+-- • vw_revenue_summary
+-- • vw_customer_lifetime_revenue
+-- • vw_support_performance
+-- • vw_product_usage_summary
+-- • vw_account_manager_performance
 -- =============================================================================
