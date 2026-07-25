@@ -271,3 +271,79 @@ FROM monthly_revenue;
 -- =============================================================================
 -- End of Running Totals & Moving Averages
 -- =============================================================================
+-- =============================================================================
+-- SECTION 5 : LAG() & LEAD() FUNCTIONS
+-- Purpose:
+-- Compare current performance with previous and future periods
+-- using analytical window functions.
+-- =============================================================================
+-- -----------------------------------------------------------------------------
+-- Q13. Month-over-Month Revenue Growth
+-- Objective : Compare each month's revenue with the previous month.
+-- -----------------------------------------------------------------------------
+WITH monthly_revenue AS (
+    SELECT DATE_FORMAT(invoice_date, '%Y-%m') AS revenue_month,
+        SUM(amount) AS monthly_revenue
+    FROM invoices
+    WHERE payment_status = 'Paid'
+    GROUP BY DATE_FORMAT(invoice_date, '%Y-%m')
+)
+SELECT revenue_month,
+    monthly_revenue,
+    LAG(monthly_revenue) OVER (
+        ORDER BY revenue_month
+    ) AS previous_month_revenue,
+    ROUND(
+        monthly_revenue - LAG(monthly_revenue) OVER (
+            ORDER BY revenue_month
+        ),
+        2
+    ) AS revenue_difference
+FROM monthly_revenue;
+-- -----------------------------------------------------------------------------
+-- Q14. Month-over-Month Revenue Growth Percentage
+-- Objective : Calculate percentage growth compared to the previous month.
+-- -----------------------------------------------------------------------------
+WITH monthly_revenue AS (
+    SELECT DATE_FORMAT(invoice_date, '%Y-%m') AS revenue_month,
+        SUM(amount) AS monthly_revenue
+    FROM invoices
+    WHERE payment_status = 'Paid'
+    GROUP BY DATE_FORMAT(invoice_date, '%Y-%m')
+)
+SELECT revenue_month,
+    monthly_revenue,
+    ROUND(
+        (
+            (
+                monthly_revenue - LAG(monthly_revenue) OVER (
+                    ORDER BY revenue_month
+                )
+            ) / LAG(monthly_revenue) OVER (
+                ORDER BY revenue_month
+            )
+        ) * 100,
+        2
+    ) AS revenue_growth_percentage
+FROM monthly_revenue;
+-- -----------------------------------------------------------------------------
+-- Q15. Compare Current and Next Month Revenue
+-- Objective : Display current month's revenue along with the
+-- following month's revenue for forecasting and planning.
+-- -----------------------------------------------------------------------------
+WITH monthly_revenue AS (
+    SELECT DATE_FORMAT(invoice_date, '%Y-%m') AS revenue_month,
+        SUM(amount) AS monthly_revenue
+    FROM invoices
+    WHERE payment_status = 'Paid'
+    GROUP BY DATE_FORMAT(invoice_date, '%Y-%m')
+)
+SELECT revenue_month,
+    monthly_revenue,
+    LEAD(monthly_revenue) OVER (
+        ORDER BY revenue_month
+    ) AS next_month_revenue
+FROM monthly_revenue;
+-- =============================================================================
+-- End of LAG() & LEAD() Functions
+-- =============================================================================
