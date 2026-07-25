@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Power BI cache
+*.pbix.lock
+
+# Temporary files
+*.tmp

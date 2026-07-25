@@ -1,0 +1,5 @@
+plan_id,plan_name,monthly_price,max_users,storage_limit_gb,created_at
+1,Starter,29,5,50,2026-07-25 00:18:28.977813
+2,Professional,79,25,250,2026-07-25 00:18:28.977824
+3,Business,199,100,1000,2026-07-25 00:18:28.977828
+4,Enterprise,599,500,5000,2026-07-25 00:18:28.977832
