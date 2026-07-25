@@ -145,3 +145,66 @@ FROM manager_revenue;
 -- =============================================================================
 -- End of Ranking Functions
 -- =============================================================================
+-- =============================================================================
+-- SECTION 3 : WINDOW AGGREGATE FUNCTIONS
+-- Purpose:
+-- Perform advanced analytical calculations using window aggregate
+-- functions while preserving individual row-level details.
+-- =============================================================================
+-- -----------------------------------------------------------------------------
+-- Q7. Revenue Contribution of Each Invoice
+-- Objective : Calculate each invoice amount along with the overall
+-- revenue and its percentage contribution.
+-- -----------------------------------------------------------------------------
+SELECT invoice_id,
+    amount,
+    SUM(amount) OVER () AS total_revenue,
+    ROUND(
+        (amount / SUM(amount) OVER ()) * 100,
+        2
+    ) AS revenue_percentage
+FROM invoices
+WHERE payment_status = 'Paid';
+-- -----------------------------------------------------------------------------
+-- Q8. Average Invoice Amount by Payment Method
+-- Objective : Compare each invoice against the average invoice amount
+-- within its payment method.
+-- -----------------------------------------------------------------------------
+SELECT invoice_id,
+    payment_method,
+    amount,
+    ROUND(
+        AVG(amount) OVER (
+            PARTITION BY payment_method
+        ),
+        2
+    ) AS average_payment_method_amount
+FROM invoices
+WHERE payment_status = 'Paid';
+-- -----------------------------------------------------------------------------
+-- Q9. Customer Revenue Compared to Regional Revenue
+-- Objective : Compare customer revenue with the total revenue generated
+-- within the customer's region.
+-- -----------------------------------------------------------------------------
+WITH customer_revenue AS (
+    SELECT c.customer_id,
+        c.company_name,
+        c.region,
+        SUM(i.amount) AS total_revenue
+    FROM customers c
+        JOIN subscriptions s ON c.customer_id = s.customer_id
+        JOIN invoices i ON s.subscription_id = i.subscription_id
+    WHERE i.payment_status = 'Paid'
+    GROUP BY c.customer_id,
+        c.company_name,
+        c.region
+)
+SELECT customer_id,
+    company_name,
+    region,
+    total_revenue,
+    SUM(total_revenue) OVER (PARTITION BY region) AS regional_revenue
+FROM customer_revenue;
+-- =============================================================================
+-- End of Window Aggregate Functions
+-- =============================================================================
