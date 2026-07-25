@@ -208,3 +208,66 @@ FROM customer_revenue;
 -- =============================================================================
 -- End of Window Aggregate Functions
 -- =============================================================================
+-- =============================================================================
+-- SECTION 4 : RUNNING TOTALS & MOVING AVERAGES
+-- Purpose:
+-- Analyze cumulative business performance and identify
+-- revenue trends over time using window functions.
+-- =============================================================================
+-- -----------------------------------------------------------------------------
+-- Q10. Running Total of Monthly Revenue
+-- Objective : Calculate cumulative revenue earned over time.
+-- -----------------------------------------------------------------------------
+WITH monthly_revenue AS (
+    SELECT DATE_FORMAT(invoice_date, '%Y-%m') AS revenue_month,
+        SUM(amount) AS monthly_revenue
+    FROM invoices
+    WHERE payment_status = 'Paid'
+    GROUP BY DATE_FORMAT(invoice_date, '%Y-%m')
+)
+SELECT revenue_month,
+    monthly_revenue,
+    SUM(monthly_revenue) OVER (
+        ORDER BY revenue_month
+    ) AS running_total_revenue
+FROM monthly_revenue;
+-- -----------------------------------------------------------------------------
+-- Q11. Running Total of Customer Signups
+-- Objective : Track cumulative customer growth over time.
+-- -----------------------------------------------------------------------------
+WITH monthly_signups AS (
+    SELECT DATE_FORMAT(signup_date, '%Y-%m') AS signup_month,
+        COUNT(*) AS new_customers
+    FROM customers
+    GROUP BY DATE_FORMAT(signup_date, '%Y-%m')
+)
+SELECT signup_month,
+    new_customers,
+    SUM(new_customers) OVER (
+        ORDER BY signup_month
+    ) AS cumulative_customers
+FROM monthly_signups;
+-- -----------------------------------------------------------------------------
+-- Q12. Three-Month Moving Average of Revenue
+-- Objective : Smooth monthly revenue fluctuations by calculating
+-- a rolling three-month average.
+-- -----------------------------------------------------------------------------
+WITH monthly_revenue AS (
+    SELECT DATE_FORMAT(invoice_date, '%Y-%m') AS revenue_month,
+        SUM(amount) AS monthly_revenue
+    FROM invoices
+    WHERE payment_status = 'Paid'
+    GROUP BY DATE_FORMAT(invoice_date, '%Y-%m')
+)
+SELECT revenue_month,
+    monthly_revenue,
+    ROUND(
+        AVG(monthly_revenue) OVER (
+            ORDER BY revenue_month ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+        ),
+        2
+    ) AS moving_average_revenue
+FROM monthly_revenue;
+-- =============================================================================
+-- End of Running Totals & Moving Averages
+-- =============================================================================
