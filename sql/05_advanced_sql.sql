@@ -347,3 +347,64 @@ FROM monthly_revenue;
 -- =============================================================================
 -- End of LAG() & LEAD() Functions
 -- =============================================================================
+-- =============================================================================
+-- SECTION 6 : CASE EXPRESSIONS & CUSTOMER SEGMENTATION
+-- Purpose:
+-- Categorize customers and business metrics using conditional
+-- logic to support reporting and strategic decision-making.
+-- =============================================================================
+-- -----------------------------------------------------------------------------
+-- Q16. Customer Segmentation by Revenue
+-- Objective : Classify customers into High, Medium, and Low
+-- revenue segments based on lifetime revenue.
+-- -----------------------------------------------------------------------------
+WITH customer_revenue AS (
+    SELECT c.customer_id,
+        c.company_name,
+        ROUND(SUM(i.amount), 2) AS total_revenue
+    FROM customers c
+        JOIN subscriptions s ON c.customer_id = s.customer_id
+        JOIN invoices i ON s.subscription_id = i.subscription_id
+    WHERE i.payment_status = 'Paid'
+    GROUP BY c.customer_id,
+        c.company_name
+)
+SELECT customer_id,
+    company_name,
+    total_revenue,
+    CASE
+        WHEN total_revenue >= 10000 THEN 'High Value'
+        WHEN total_revenue >= 5000 THEN 'Medium Value'
+        ELSE 'Low Value'
+    END AS customer_segment
+FROM customer_revenue
+ORDER BY total_revenue DESC;
+-- -----------------------------------------------------------------------------
+-- Q17. Invoice Payment Status Summary
+-- Objective : Categorize invoices based on payment status.
+-- -----------------------------------------------------------------------------
+SELECT invoice_id,
+    amount,
+    payment_status,
+    CASE
+        WHEN payment_status = 'Paid' THEN 'Revenue Collected'
+        WHEN payment_status = 'Pending' THEN 'Awaiting Payment'
+        WHEN payment_status = 'Failed' THEN 'Payment Failed'
+    END AS payment_summary
+FROM invoices;
+-- -----------------------------------------------------------------------------
+-- Q18. Subscription Discount Category
+-- Objective : Classify subscriptions according to the discount offered.
+-- -----------------------------------------------------------------------------
+SELECT subscription_id,
+    discount_percent,
+    CASE
+        WHEN discount_percent = 0 THEN 'No Discount'
+        WHEN discount_percent <= 10 THEN 'Low Discount'
+        WHEN discount_percent <= 25 THEN 'Medium Discount'
+        ELSE 'High Discount'
+    END AS discount_category
+FROM subscriptions;
+-- =============================================================================
+-- End of CASE Expressions & Customer Segmentation
+-- =============================================================================
