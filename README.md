@@ -8,10 +8,6 @@
 
 _A complete Data Analytics project that simulates a real-world Software-as-a-Service (SaaS) business using SQL, Python, and Power BI._
 
-![SQL](...)
-![Python](...)
-...
-
 ![SQL](https://img.shields.io/badge/SQL-MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-Pandas-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
