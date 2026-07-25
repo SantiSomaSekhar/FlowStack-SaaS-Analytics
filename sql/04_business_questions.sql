@@ -281,3 +281,56 @@ ORDER BY lifetime_revenue DESC;
 -- =============================================================================
 -- End of Customer Value Analysis
 -- =============================================================================
+-- =============================================================================
+-- SECTION 5 : CUSTOMER SUPPORT ANALYTICS
+-- Purpose:
+-- Analyze customer support performance, ticket distribution,
+-- resolution efficiency, and customer satisfaction.
+-- =============================================================================
+-- -----------------------------------------------------------------------------
+-- Q21. Support Tickets by Category
+-- Objective : Identify the most common customer support requests.
+-- -----------------------------------------------------------------------------
+SELECT category,
+    COUNT(*) AS total_tickets
+FROM support_tickets
+GROUP BY category
+ORDER BY total_tickets DESC;
+-- -----------------------------------------------------------------------------
+-- Q22. Support Tickets by Priority
+-- Objective : Analyze the distribution of ticket priorities.
+-- -----------------------------------------------------------------------------
+SELECT priority,
+    COUNT(*) AS total_tickets
+FROM support_tickets
+GROUP BY priority
+ORDER BY total_tickets DESC;
+-- -----------------------------------------------------------------------------
+-- Q23. Average Resolution Time by Ticket Category
+-- Objective : Measure how quickly different types of support requests are resolved.
+-- -----------------------------------------------------------------------------
+SELECT category,
+    ROUND(AVG(resolution_hours), 2) AS average_resolution_hours
+FROM support_tickets
+WHERE ticket_resolved_date IS NOT NULL
+GROUP BY category
+ORDER BY average_resolution_hours;
+-- -----------------------------------------------------------------------------
+-- Q24. Average Customer Satisfaction Rating
+-- Objective : Evaluate overall customer satisfaction with support services.
+-- -----------------------------------------------------------------------------
+SELECT ROUND(AVG(customer_rating), 2) AS average_customer_rating
+FROM support_tickets
+WHERE customer_rating IS NOT NULL;
+-- -----------------------------------------------------------------------------
+-- Q25. Ticket Status Distribution
+-- Objective : Monitor the current status of customer support tickets.
+-- -----------------------------------------------------------------------------
+SELECT status,
+    COUNT(*) AS total_tickets
+FROM support_tickets
+GROUP BY status
+ORDER BY total_tickets DESC;
+-- =============================================================================
+-- End of Customer Support Analytics
+-- =============================================================================
