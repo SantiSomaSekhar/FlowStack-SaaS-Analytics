@@ -3,7 +3,7 @@
  Project      : FlowStack SaaS Analytics
  File         : 01_database_setup.sql
  Author       : SANTENNAGARI SOMA SEKHAR
- Description  :
+ Description  : 
  Creates the FlowStack SaaS Analytics database, tables,
  relationships, and indexes required for the project.
  
