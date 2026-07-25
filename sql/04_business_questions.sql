@@ -334,3 +334,71 @@ ORDER BY total_tickets DESC;
 -- =============================================================================
 -- End of Customer Support Analytics
 -- =============================================================================
+-- =============================================================================
+-- SECTION 6 : PRODUCT USAGE ANALYTICS
+-- Purpose:
+-- Analyze customer engagement, platform usage,
+-- and product adoption trends.
+-- =============================================================================
+-- -----------------------------------------------------------------------------
+-- Q26. Average Product Usage Metrics
+-- Objective : Measure the average customer usage across key platform metrics.
+-- -----------------------------------------------------------------------------
+SELECT ROUND(AVG(active_users), 2) AS avg_active_users,
+    ROUND(AVG(api_requests), 2) AS avg_api_requests,
+    ROUND(AVG(storage_used_gb), 2) AS avg_storage_used_gb,
+    ROUND(AVG(login_count), 2) AS avg_login_count
+FROM usage_logs;
+-- -----------------------------------------------------------------------------
+-- Q27. Top 10 Customers by API Requests
+-- Objective : Identify customers generating the highest API traffic.
+-- -----------------------------------------------------------------------------
+SELECT c.customer_id,
+    c.company_name,
+    SUM(u.api_requests) AS total_api_requests
+FROM customers c
+    JOIN usage_logs u ON c.customer_id = u.customer_id
+GROUP BY c.customer_id,
+    c.company_name
+ORDER BY total_api_requests DESC
+LIMIT 10;
+-- -----------------------------------------------------------------------------
+-- Q28. Top 10 Customers by Storage Usage
+-- Objective : Identify customers consuming the highest storage capacity.
+-- -----------------------------------------------------------------------------
+SELECT c.customer_id,
+    c.company_name,
+    ROUND(SUM(u.storage_used_gb), 2) AS total_storage_used_gb
+FROM customers c
+    JOIN usage_logs u ON c.customer_id = u.customer_id
+GROUP BY c.customer_id,
+    c.company_name
+ORDER BY total_storage_used_gb DESC
+LIMIT 10;
+-- -----------------------------------------------------------------------------
+-- Q29. Top 10 Customers by Login Activity
+-- Objective : Identify the most active customers based on login frequency.
+-- -----------------------------------------------------------------------------
+SELECT c.customer_id,
+    c.company_name,
+    SUM(u.login_count) AS total_logins
+FROM customers c
+    JOIN usage_logs u ON c.customer_id = u.customer_id
+GROUP BY c.customer_id,
+    c.company_name
+ORDER BY total_logins DESC
+LIMIT 10;
+-- -----------------------------------------------------------------------------
+-- Q30. Monthly Product Usage Trend
+-- Objective : Monitor overall platform usage over time.
+-- -----------------------------------------------------------------------------
+SELECT DATE_FORMAT(usage_month, '%Y-%m') AS usage_month,
+    SUM(active_users) AS total_active_users,
+    SUM(api_requests) AS total_api_requests,
+    ROUND(SUM(storage_used_gb), 2) AS total_storage_used_gb
+FROM usage_logs
+GROUP BY DATE_FORMAT(usage_month, '%Y-%m')
+ORDER BY usage_month;
+-- =============================================================================
+-- End of Product Usage Analytics
+-- =============================================================================
