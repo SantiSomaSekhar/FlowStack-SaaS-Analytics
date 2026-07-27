@@ -1,2 +1,23 @@
-# Auto detect text files and perform LF normalization
+
+# Auto detect text files
 * text=auto
+
+# SQL
+*.sql text
+
+# Markdown
+*.md text
+
+# CSV
+*.csv text
+
+# Python
+*.py text
+
+# Images
+*.png binary
+*.jpg binary
+*.jpeg binary
+
+# Power BI
+*.pbix binary

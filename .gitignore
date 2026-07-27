@@ -1,18 +1,42 @@
-# Python
-__pycache__/
-*.pyc
 
+# ==========================
+# OS Files
+# ==========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==========================
 # VS Code
+# ==========================
 .vscode/
 
-# macOS
-.DS_Store
+# ==========================
+# Python
+# ==========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 
-# Windows
-Thumbs.db
+# ==========================
+# Jupyter Notebook
+# ==========================
+.ipynb_checkpoints/
 
-# Power BI cache
-*.pbix.lock
+# ==========================
+# Environment Files
+# ==========================
+.env
+.venv/
+venv/
 
-# Temporary files
-*.tmp
+# ==========================
+# Power BI Temporary Files
+# ==========================
+*.pbix.autosave
+
+# ==========================
+# Log Files
+# ==========================
+*.log
