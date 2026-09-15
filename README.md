@@ -1,5 +1,17 @@
-
 <div align="center">
+
+# 🚀 FlowStack SaaS Analytics
+
+### End-to-End SQL Analytics & Business Intelligence Project
+
+_A complete Data Analytics project that simulates a real-world Software-as-a-Service (SaaS) business using SQL, Python, and Power BI._
+
+![SQL](https://img.shields.io/badge/SQL-MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Python](https://img.shields.io/badge/Python-Pandas-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
+![Git](https://img.shields.io/badge/Git-Version%20Control-F05032?style=for-the-badge&logo=git&logoColor=white)
+
+</div>
 
 ---
 
@@ -28,15 +40,15 @@ Key business areas include:
 
 ## 🛠️ Tools & Technologies
 
-| Category           | Technology         |
-| ------------------ | ------------------ |
-| 🗄️ Database      | MySQL              |
-| 🔎 Query Language  | SQL                |
-| 🐍 Programming     | Python (Pandas)    |
-| 📊 Visualization   | Power BI           |
-| 🔧 Version Control | Git                |
-| 🐙 Repository      | GitHub             |
-| 💻 Development     | Visual Studio Code |
+| Category | Technology |
+|---|---|
+| 🗄️ Database | MySQL |
+| 🔎 Query Language | SQL |
+| 🐍 Programming | Python (Pandas) |
+| 📊 Visualization | Power BI |
+| 🔧 Version Control | Git |
+| 🐙 Repository | GitHub |
+| 💻 Development | Visual Studio Code |
 
 ## 📂 Repository Structure
 
@@ -191,14 +203,12 @@ The project demonstrates SQL skills across different levels of analysis.
 The project uses SQL to answer real-world SaaS business questions across key areas:
 
 ### 👥 Customer Analytics
-
 - Top customers by revenue
 - Customer acquisition trends
 - Customer churn analysis
 - Customer lifetime value
 
 ### 💰 Revenue & Subscription Analytics
-
 - Monthly revenue trends
 - Revenue by subscription plan
 - Revenue by region
@@ -206,20 +216,17 @@ The project uses SQL to answer real-world SaaS business questions across key are
 - Revenue vs. monthly targets
 
 ### 📊 Product Usage
-
 - Usage trends over time
 - Usage by plan and region
 - Top customers by usage
 - API request analysis
 
 ### 🎧 Support Analytics
-
 - Tickets by category, priority, and status
 - Average resolution time
 - Support performance analysis
 
 ### 👨‍💼 Account Manager Performance
-
 - Manager-wise revenue performance
 - Customer performance by account manager
 
@@ -228,23 +235,18 @@ The project uses SQL to answer real-world SaaS business questions across key are
 The project includes a **5-page interactive Power BI dashboard** covering the key areas of SaaS business performance.
 
 ### 🏠 Executive Overview
-
 Overall business performance, revenue, customers, subscriptions, and target achievement.
 
 ### 💰 Revenue & Subscriptions
-
 Revenue trends, plan performance, regional revenue, and subscription analysis.
 
 ### 👥 Customer Analytics
-
 Customer distribution, acquisition trends, industries, and top customers by revenue.
 
 ### 📊 Product Usage
-
 Usage trends, API requests, plan and regional usage, and top customers by usage.
 
 ### 🎧 Support Performance
-
 Ticket trends, categories, priorities, statuses, and resolution performance.
 
 ### 🖼️ Dashboard Preview
@@ -338,3 +340,7 @@ This project is licensed under the **MIT License**.
 ---
 
 <div align="center">
+
+### ⭐ If you found this project useful, consider giving it a star.
+
+</div>
