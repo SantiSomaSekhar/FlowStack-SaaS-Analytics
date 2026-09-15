@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src="images/flowstack_banner.png" alt="FlowStack SaaS Analytics Banner" width="100%">
-
 # 🚀 FlowStack SaaS Analytics
 
 ### End-to-End SQL Analytics & Business Intelligence Project
@@ -17,74 +15,57 @@ _A complete Data Analytics project that simulates a real-world Software-as-a-Ser
 
 ---
 
-# 📖 About The Project
+## 📌 Project Overview
 
-FlowStack SaaS Analytics is an end-to-end Business Intelligence project that demonstrates how a Data Analyst transforms raw business data into actionable insights.
+This project analyzes SaaS customer, subscription, revenue, usage, and support data using **MySQL, SQL, Python, and Power BI**.
 
-The project simulates a subscription-based SaaS company and follows the same workflow used in professional analytics teams—from data generation and database design to SQL analysis and interactive dashboards.
+The project follows an end-to-end data analytics workflow, starting with data generation and relational database design, followed by exploratory analysis, business-oriented SQL analysis, advanced SQL techniques, data validation, reusable SQL views and stored procedures, and an interactive Power BI dashboard.
 
-This repository showcases practical SQL skills, business analysis techniques, and dashboard development using real-world business scenarios.
+The main objective is to transform raw SaaS data into meaningful analytical insights about **customers, subscriptions, revenue, plans, product usage, support performance, account managers, and revenue targets**.
 
----
+## 🛠️ Tools & Technologies
 
-# 🎯 Business Objective
+| Category | Technology |
+|---|---|
+| 🗄️ Database | MySQL |
+| 🔎 Query Language | SQL |
+| 🐍 Programming | Python (Pandas) |
+| 📊 Visualization | Power BI |
+| 🔧 Version Control | Git |
+| 🐙 Repository | GitHub |
+| 💻 Development | Visual Studio Code |
 
-The objective is to help business stakeholders answer critical questions such as:
+## 📂 Repository Structure
 
-- Which subscription plans generate the highest revenue?
-- Which customers contribute the most to Monthly Recurring Revenue (MRR)?
-- How is revenue changing month over month?
-- Which customers are likely to churn?
-- Which account managers perform the best?
-- Which countries generate the highest revenue?
-- How efficiently are customer support tickets being resolved?
-
----
-
-# 🛠 Tech Stack
-
-| Category                | Technology         |
-| ----------------------- | ------------------ |
-| Database                | MySQL              |
-| Query Language          | SQL                |
-| Programming             | Python (Pandas)    |
-| Visualization           | Power BI           |
-| Version Control         | Git                |
-| Repository Hosting      | GitHub             |
-| Development Environment | Visual Studio Code |
-
----
-
-# 📂 Repository Structure
-
-```
-FlowStack-SaaS-Analytics
+```text
+FlowStack-SaaS-Analytics/
 │
-├── data/
+├── 📁 data/
 │   ├── account_managers.csv
 │   ├── customers.csv
-│   ├── invoices.csv
-│   ├── monthly_targets.csv
 │   ├── plans.csv
 │   ├── subscriptions.csv
+│   ├── invoices.csv
 │   ├── support_tickets.csv
-│   └── usage_logs.csv
+│   ├── usage_logs.csv
+│   └── monthly_targets.csv
 │
-├── docs/
+├── 📁 docs/
 │   ├── data_dictionary.md
 │   └── project_journey.md
 │
-├── images/
+├── 📁 images/
 │   ├── dashboard_preview.png
 │   ├── er_diagram.png
 │   └── schema.png
 │
-├── powerbi/
+├── 📁 powerbi/
+│   └── FlowStack_SaaS_Analytics.pbix
 │
-├── python/
+├── 📁 python/
 │   └── 07_generate_flowstack_data.py
 │
-├── sql/
+├── 📁 sql/
 │   ├── 01_database_setup.sql
 │   ├── 02_data_import.sql
 │   ├── 03_exploratory_analysis.sql
@@ -94,258 +75,235 @@ FlowStack-SaaS-Analytics
 │   ├── 07_validation.sql
 │   └── 08_stored_procedures.sql
 │
-├── README.md
-├── LICENSE
-└── .gitignore
+├── 📄 README.md
+├── 📄 LICENSE
+├── 📄 .gitignore
+└── 📄 .gitattributes
 ```
+## 🔄 Project Workflow
 
----
+The project follows a complete end-to-end data analytics workflow:
 
-# 🔄 Project Workflow
-
+```text
+📋 Business Requirements
+        ↓
+🐍 Python Data Generation
+        ↓
+📄 CSV Data
+        ↓
+🗄️ MySQL Database
+        ↓
+🔎 Exploratory Analysis
+        ↓
+📊 Business Analysis
+        ↓
+⚡ Advanced SQL
+        ↓
+👁️ Views & Stored Procedures
+        ↓
+✅ Data Validation
+        ↓
+📈 Power BI Dashboard
+        ↓
+💡 Business Insights
 ```
-Business Requirements
-          │
-          ▼
-Python Data Generation
-          │
-          ▼
-CSV Files
-          │
-          ▼
-MySQL Database
-          │
-          ▼
-Data Cleaning & Validation
-          │
-          ▼
-Exploratory SQL Analysis
-          │
-          ▼
-Business KPI Analysis
-          │
-          ▼
-Views & Stored Procedures
-          │
-          ▼
-Power BI Dashboard
-          │
-          ▼
-Business Insights
-```
+## 📊 Section 7 — Key Performance Indicators
 
----
+The project focuses on key SaaS metrics used to measure business performance:
 
-# 🗄 Database Design
+- 💰 Monthly Recurring Revenue (MRR)
+- 📈 Annual Recurring Revenue (ARR)
+- 👤 Customer Lifetime Value (CLV)
+- 📉 Customer Churn Rate
+- 👥 Customer Growth
+- 💵 Average Revenue Per Customer
+- 🔄 Active Subscriptions
+- 🌍 Region-wise Revenue
+- 👨‍💼 Account Manager Performance
+- 📊 Product Usage
+- 🎧 Support Performance
+- 🎯 Revenue Target Achievement
 
-The project uses a relational database consisting of multiple interconnected tables.
+## 🧠 Section 8 — SQL Analysis & Skills
 
-### Core Tables
+The project demonstrates SQL skills across different levels of analysis.
 
-- Customers
-- Subscription Plans
-- Subscriptions
-- Invoices
-- Usage Logs
-- Account Managers
-- Monthly Targets
-- Support Tickets
+### 🗄️ Database & Fundamentals
 
-**Database ER Diagram**
-
-```
-images/er_diagram.png
-```
-
----
-
-# 📊 Key Performance Indicators
-
-The analysis focuses on important SaaS business metrics including:
-
-- Monthly Recurring Revenue (MRR)
-- Annual Recurring Revenue (ARR)
-- Customer Lifetime Value (CLV)
-- Customer Churn Rate
-- Customer Growth
-- Revenue Growth
-- Average Revenue Per User (ARPU)
-- Active Customers
-- Subscription Distribution
-- Country-wise Revenue
-- Account Manager Performance
-- Support Ticket Performance
-
----
-
-# 📈 SQL Skills Demonstrated
-
-### Database Design
-
-- Database Creation
-- Table Design
-- Primary Keys
-- Foreign Keys
+- Database and table creation
+- Primary & Foreign Keys
 - Constraints
+- SELECT, WHERE, GROUP BY, HAVING
+- Aggregate Functions
 
-### SQL Fundamentals
-
-- SELECT
-- WHERE
-- ORDER BY
-- GROUP BY
-- HAVING
-- LIMIT
-
-### Intermediate SQL
+### 🔗 Intermediate SQL
 
 - INNER JOIN
 - LEFT JOIN
 - RIGHT JOIN
 - CROSS JOIN
 - CASE Statements
-- Aggregate Functions
 - Subqueries
 
-### Advanced SQL
+### ⚡ Advanced SQL
 
 - Common Table Expressions (CTEs)
 - Window Functions
 - ROW_NUMBER()
 - RANK()
 - DENSE_RANK()
-- LAG()
-- LEAD()
-- Views
+- LAG() & LEAD()
+- Running Totals
+- Moving Averages
+- SQL Views
 - Stored Procedures
 
----
+### ✅ Data Validation
 
-# 📋 Business Questions Solved
+- NULL Checks
+- Duplicate Checks
+- Referential Integrity
+- Business Rule Validation
+- Date Validation
 
-Examples of business problems addressed in this project:
+## 📋 Section 9 — Business Questions Solved
 
+The project uses SQL to answer real-world SaaS business questions across key areas:
+
+### 👥 Customer Analytics
 - Top customers by revenue
+- Customer acquisition trends
+- Customer churn analysis
+- Customer lifetime value
+
+### 💰 Revenue & Subscription Analytics
 - Monthly revenue trends
 - Revenue by subscription plan
-- Customer churn analysis
-- Active customer tracking
-- Country-wise revenue comparison
-- Account manager performance evaluation
-- Monthly customer acquisition
-- Customer support performance
-- Subscription plan profitability
+- Revenue by region
+- Subscription performance
+- Revenue vs. monthly targets
 
----
+### 📊 Product Usage
+- Usage trends over time
+- Usage by plan and region
+- Top customers by usage
+- API request analysis
 
-# 📷 Dashboard Preview
+### 🎧 Support Analytics
+- Tickets by category, priority, and status
+- Average resolution time
+- Support performance analysis
 
-```
-images/dashboard_preview.png
-```
+### 👨‍💼 Account Manager Performance
+- Manager-wise revenue performance
+- Customer performance by account manager
 
-_(Power BI dashboard screenshot will be displayed here.)_
+## 📈 Section 10 — Power BI Dashboard
 
----
+The project includes a **5-page interactive Power BI dashboard** covering the key areas of SaaS business performance.
 
-# 🚀 Running the Project
+### 🏠 Executive Overview
+Overall business performance, revenue, customers, subscriptions, and target achievement.
 
-## 1. Clone the Repository
+### 💰 Revenue & Subscriptions
+Revenue trends, plan performance, regional revenue, and subscription analysis.
 
-```bash
-git clone https://github.com/SantiSomaSekhar/FlowStack-SaaS-Analytics.git
-```
+### 👥 Customer Analytics
+Customer distribution, acquisition trends, industries, and top customers by revenue.
 
----
+### 📊 Product Usage
+Usage trends, API requests, plan and regional usage, and top customers by usage.
 
-## 2. Open MySQL
+### 🎧 Support Performance
+Ticket trends, categories, priorities, statuses, and resolution performance.
 
-Execute the SQL scripts in the following order:
+### 🖼️ Dashboard Preview
 
-```
-01_database_setup.sql
+![Power BI Dashboard Preview](images/dashboard_preview.png)
 
-02_data_import.sql
+**Power BI Report:** `powerbi/FlowStack_SaaS_Analytics.pbix`
 
-03_exploratory_analysis.sql
+## 🐍 Section 11 — Python Data Generation
 
-04_business_questions.sql
+Python and Pandas are used to generate the datasets required for the project.
 
-05_advanced_sql.sql
+The script generates data for:
 
-06_views.sql
-
-07_validation.sql
-
-08_stored_procedures.sql
-```
-
----
-
-## 3. Generate Sample Data
+- 👨‍💼 Account Managers
+- 👥 Customers
+- 📦 Plans
+- 🔄 Subscriptions
+- 💰 Invoices
+- 🎧 Support Tickets
+- 📊 Usage Logs
+- 🎯 Monthly Targets
 
 ```bash
 python python/07_generate_flowstack_data.py
 ```
 
----
+## 🚀 Section 12 — How to Run the Project
 
-## 4. Open Power BI
+### 1. 📥 Clone the Repository
 
-Load the project files from the **powerbi/** directory and refresh the data source.
+```bash
+git clone https://github.com/SantiSomaSekhar/FlowStack-SaaS-Analytics.git
+```
 
----
+### 2. 🐍 Generate the Data
 
-# 💡 Key Skills Demonstrated
+```bash
+python python/07_generate_flowstack_data.py
+```
 
-- SQL Query Writing
-- Database Design
-- Business Intelligence
-- Data Cleaning
-- Exploratory Data Analysis
-- Data Validation
-- Dashboard Development
-- Business KPI Analysis
-- Git Version Control
-- GitHub Project Management
-- Python Automation
-- Technical Documentation
+### 3. 🗄️ Run the SQL Scripts
 
----
+Execute the SQL files in this order:
 
-# 📚 Learning Outcomes
+```text
+01_database_setup.sql
+02_data_import.sql
+03_exploratory_analysis.sql
+04_business_questions.sql
+05_advanced_sql.sql
+06_views.sql
+07_validation.sql
+08_stored_procedures.sql
+```
 
-This project demonstrates practical experience in:
+### 4. 📊 Open Power BI
 
-- Designing relational databases
-- Building scalable SQL queries
-- Solving real business problems using SQL
-- Creating reusable SQL Views
-- Developing Stored Procedures
-- Applying Window Functions
-- Building interactive Power BI dashboards
-- Managing analytics projects with Git and GitHub
-- Maintaining professional project documentation
+Open:
 
----
+`powerbi/FlowStack_SaaS_Analytics.pbix`
 
-# 👨‍💻 Author
+Refresh the data source if required.
 
-**Santennagari Soma Sekhar **
+## 💡 Key Skills Demonstrated
 
-**GitHub**
+- 🗄️ MySQL & SQL
+- 🔎 Exploratory & Business Analysis
+- ⚡ Advanced SQL & Window Functions
+- ✅ Data Validation
+- 👁️ SQL Views & Stored Procedures
+- 🐍 Python & Pandas
+- 📊 Power BI & Data Visualization
+- 🔧 Git & GitHub
 
-https://github.com/SantiSomaSekhar
+## 📚 Documentation
 
-**LinkedIn**
+- 📖 **Data Dictionary** — Tables, columns, data types, keys, and relationships.
+- 📝 **Project Journey** — Complete project workflow, development stages, and key learnings.
 
-_Add your LinkedIn profile URL here._
+## 👨‍💻 Author
 
----
+**Santennagari Soma Sekhar**
 
-# 📄 License
+🔗 [GitHub](https://github.com/SantiSomaSekhar)
 
-This project is licensed under the MIT License.
+## 📄 License
+
+This project is licensed under the **MIT License**.
 
 ---
 
@@ -354,3 +312,6 @@ This project is licensed under the MIT License.
 ### ⭐ If you found this project useful, consider giving it a star.
 
 </div>
+
+
+
