@@ -70,9 +70,13 @@ FlowStack-SaaS-Analytics/
 │   └── project_journey.md
 │
 ├── 📁 images/
-│   ├── dashboard_preview.png
-│   ├── er_diagram.png
-│   └── schema.png
+│   ├── 01_Flowstack_Banner.png
+│   ├── 02_ER_Diagram.png
+│   ├── 03_Executive_Overview.png
+│   ├── 04_Revenue_Subscriptions.png
+│   ├── 05_Customer_Analytics.png
+│   ├── 06_Product_Usage.png
+│   └── 07_Support_Performance.png
 │
 ├── 📁 powerbi/
 │   └── FlowStack_SaaS_Analytics.pbix
@@ -251,9 +255,9 @@ Ticket trends, categories, priorities, statuses, and resolution performance.
 
 ### 🖼️ Dashboard Preview
 
-![Power BI Dashboard Preview](images/dashboard_preview.png)
+![Executive Overview](images/03_Executive_Overview.png)
 
-**Power BI Report:** `powerbi/FlowStack_SaaS_Analytics.pbix`
+Power BI Report: [FlowStack SaaS Analytics](powerbi/FlowStack_SaaS_Analytics.pbix)
 
 ## 🐍 Section 11 — Python Data Generation
 
